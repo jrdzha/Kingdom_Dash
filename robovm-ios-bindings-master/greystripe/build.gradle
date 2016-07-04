@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.greystripe.sample.Sample"
+}
+
+eclipse.project {
+    name = "greystripe-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

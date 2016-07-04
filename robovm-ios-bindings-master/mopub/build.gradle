@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.mopub.sample.Sample"
+}
+
+eclipse.project {
+    name = "mopub-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

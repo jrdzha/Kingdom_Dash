@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+    dependencies {
+        classpath 'org.robovm:robovm-gradle-plugin:1.8.0'
+    }
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "java"
+    apply plugin: "robovm"
+
+    version = '1.0.0'
+
+    ext {
+        roboVMVersion = '1.8.0'
+    }
+
+    dependencies {
+        compile "org.robovm:robovm-rt:${roboVMVersion}"
+        compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+
+    sourceSets.main.java.srcDirs = ["src/"]
+    sourceCompatibility = '1.7'
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    launchIPhoneSimulator.dependsOn build
+    launchIPadSimulator.dependsOn build
+    launchIOSDevice.dependsOn build
+    createIPA.dependsOn build
+
+    jar {
+        into('META-INF/robovm/ios') {
+            from(".") { include "robovm.xml" }
+        }
+        into('META-INF/robovm/ios/libs') {
+            from 'libs'
+        }
+        into('META-INF/robovm/ios/resources') {
+            from 'resources'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}

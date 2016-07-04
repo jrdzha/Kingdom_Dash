@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.playhaven.sample.Sample"
+}
+
+eclipse.project {
+    name = "playhaven-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

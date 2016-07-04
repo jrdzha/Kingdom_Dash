@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.appirater.sample.Sample"
+}
+
+eclipse.project {
+    name = "appirater-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.crashlytics.sample.Sample"
+}
+
+eclipse.project {
+    name = "crashlytics-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
