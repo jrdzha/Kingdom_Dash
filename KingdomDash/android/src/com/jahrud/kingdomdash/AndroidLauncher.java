@@ -5,65 +5,54 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
-import com.google.ads.*;
+public class AndroidLauncher extends AndroidApplication{
 
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
+	AndroidAdViewer androidAdViewer;
 
-public class AndroidLauncher extends AndroidApplication implements OSLauncher{
-
-	protected AdView adView;
-
-	@Override public void onCreate (Bundle savedInstanceState) {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// Create the layout
-		RelativeLayout layout = new RelativeLayout(this);
-
-		// Do the stuff that initialize() would do for you
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-
-		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-
-		// Create the libgdx View
-		View gameView = initializeForView(new GameEngine(this), config);
-
-		// Create and setup the AdMob view
-		adView = new AdView(this, AdSize.BANNER, "ca-app-pub-4350977853893984/4915739550");
-		adView.loadAd(new AdRequest());
-
-		// Add the libgdx view
-		layout.addView(gameView);
-
-		// Add the AdMob view
-		RelativeLayout.LayoutParams adParams =
-				new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-						RelativeLayout.LayoutParams.WRAP_CONTENT);
-		adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-		layout.addView(adView, adParams);
-
-		// Hook it all up
-		setContentView(layout);
+		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
+		androidAdViewer = new AndroidAdViewer(this);
+		initialize(new GameEngine(androidAdViewer), cfg);
 	}
 
 	@Override
-	public void showInterstitialAd() {
-
+	public void onStart() {
+		super.onStart();
+		androidAdViewer.onStart();
 	}
 
 	@Override
-	public void showBannerAd() {
-		adView.setVisibility(View.VISIBLE);
+	public void onResume() {
+		super.onResume();
+		androidAdViewer.onResume();
 	}
 
 	@Override
-	public void hideBannerAd() {
-		adView.setVisibility(View.GONE);
+	public void onPause() {
+		super.onPause();
+		androidAdViewer.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		androidAdViewer.onStop();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		androidAdViewer.onDestroy();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// If an interstitial is on screen, close it.
+		if (androidAdViewer.onBackPressed())
+			return;
+		else
+			super.onBackPressed();
 	}
 }

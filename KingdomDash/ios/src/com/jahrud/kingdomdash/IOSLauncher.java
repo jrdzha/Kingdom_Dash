@@ -5,27 +5,17 @@ import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import org.robovm.bindings.admob.*;
-
-import com.badlogic.gdx.Gdx;
-
-import org.robovm.apple.coregraphics.CGRect;
-import org.robovm.apple.coregraphics.CGSize;
-import org.robovm.apple.uikit.UIScreen;
-
-import java.util.Arrays;
+import org.robovm.apple.uikit.UIApplicationLaunchOptions;
+import org.robovm.pods.chartboost.CBLoadError;
+import org.robovm.pods.chartboost.CBLocation;
+import org.robovm.pods.chartboost.Chartboost;
+import org.robovm.pods.chartboost.ChartboostDelegateAdapter;
 
 
-public class IOSLauncher extends IOSApplication.Delegate implements OSLauncher{
-
-    private static final String BANNER_AD_UNIT_ID = "ca-app-pub-4350977853893984/9535912350";
-    private static final String TAG = "IOSLauncher";
-
-    private static final boolean USE_TEST_DEVICES = false;
-    private boolean adsInitialized = false;
-    private GADBannerView bannerView;
+public class IOSLauncher extends IOSApplication.Delegate implements AdViewer{
 
     private IOSApplication iosApplication;
+    private boolean didCompleteVideo;
 
     @Override
     protected IOSApplication createApplication() {
@@ -34,89 +24,81 @@ public class IOSLauncher extends IOSApplication.Delegate implements OSLauncher{
         return  iosApplication;
     }
 
+    @Override
+    public boolean didFinishLaunching(UIApplication application, UIApplicationLaunchOptions options){
+        Chartboost.start("5783affb04b0161cf4aac4c8", "3feb11f3f4fb0612f3ddf29e61efc806570bd3bc", new ChartboostDelegateAdapter(){
+            @Override
+            public void didCompleteRewardedVideo(String location, int reward){
+                didCompleteVideo = true;
+            }
+
+            @Override
+            public void didCacheRewardedVideo(String location){
+                showVideoAd();
+            }
+
+            @Override
+            public void didFailToLoadRewardedVideo(String location, CBLoadError error){
+                switch (error) {
+                    case InternetUnavailable:
+                        System.out.println("Failed to load Video, no Internet connection !");
+                        break;
+                    case Internal:
+                        System.out.println("Failed to load Video, internal error !");
+                        break;
+                    case NetworkFailure:
+                        System.out.println("Failed to load Video, network error !");
+                        break;
+                    case WrongOrientation:
+                        System.out.println("Failed to load Video, wrong orientation !");
+                        break;
+                    case TooManyConnections:
+                        System.out.println("Failed to load Video, too many connections !");
+                        break;
+                    case FirstSessionInterstitialsDisabled:
+                        System.out.println("Failed to load Video, first session !");
+                        break;
+                    case NoAdFound:
+                        System.out.println("Failed to load Video, no ad found !");
+                        break;
+                    case SessionNotStarted:
+                        System.out.println("Failed to load Video, session not started !");
+                        break;
+                    case NoLocationFound:
+                        System.out.println("Failed to load Video, missing location parameter !");
+                        break;
+                    default:
+                        System.out.println("Failed to load Video, unknown error !");
+                        break;
+                }
+            }
+        });
+        return super.didFinishLaunching(application, options);
+    }
+
     public static void main(String[] argv) {
         NSAutoreleasePool pool = new NSAutoreleasePool();
         UIApplication.main(argv, null, IOSLauncher.class);
         pool.close();
     }
 
-    private void initializeAds() {
-        if(adsInitialized) {
-            Gdx.app.log(TAG, "Ads already initialized exiting early");
-            return;
-        }
-        Gdx.app.log(TAG, "Initalizing ads...");
-        adsInitialized = true;
-        bannerView = createAndLoadBanner();
-        Gdx.app.log(TAG, "Initalizing ads complete.");
-    }
-
-    private GADBannerView createAndLoadBanner(){
-        Gdx.app.log(TAG, "Setting up banner ad");
-        GADBannerView bannerView = new GADBannerView(GADAdSize.smartBannerPortrait());
-        bannerView.setAdUnitID(BANNER_AD_UNIT_ID);
-        bannerView.setRootViewController(iosApplication.getUIViewController());
-        iosApplication.getUIViewController().getView().addSubview(bannerView);
-        bannerView.loadRequest(createRequest());
-
-        bannerView.setDelegate(new GADBannerViewDelegateAdapter() {
-            @Override
-            public void didReceiveAd(GADBannerView view) {
-                super.didReceiveAd(view);
-                Gdx.app.log(TAG, "didReceiveAd");
-            }
-            @Override
-            public void didFailToReceiveAd(GADBannerView view, GADRequestError error) {
-                super.didFailToReceiveAd(view, error);
-                Gdx.app.log(TAG, "didFailToReceiveAd:" + error);
-            }
-        });
-
-        return bannerView;
-    }
-
-    private GADRequest createRequest() {
-        Gdx.app.log(TAG, "Create request for ad");
-        GADRequest request = GADRequest.create();
-        // To test on your devices, add their UDIDs here:
-        if (USE_TEST_DEVICES) {
-            request.setTestDevices(Arrays.asList(GADRequest.GAD_SIMULATOR_ID));
-            Gdx.app.log(TAG, "Test devices: " + request.getTestDevices());
-        }
-        return request;
+    @Override
+    public void loadVideoAd() {
+        Chartboost.cacheRewardedVideo(CBLocation.Default);
     }
 
     @Override
-    public void showInterstitialAd() {
-
+    public void showVideoAd() {
+        Chartboost.showRewardedVideo(CBLocation.Default);
     }
 
-    public void showBannerAd() {
-        initializeAds();
-        displayBannerAd(true);
+    @Override
+    public boolean shouldReward() {
+        return didCompleteVideo;
     }
 
-    public void hideBannerAd() {
-        displayBannerAd(false);
-    }
-
-    void displayBannerAd(boolean show){
-
-        final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
-        double screenWidth = screenSize.getWidth();
-
-        final CGSize adSize = bannerView.getBounds().getSize();
-        double adWidth = adSize.getWidth();
-        double adHeight = adSize.getHeight();
-
-        Gdx.app.log(TAG, String.format((show ? "Showing" : "Hiding") + "ad. size[%s, %s]", adWidth, adHeight));
-
-        float bannerWidth = (float) screenWidth;
-        float bannerHeight = (float) (bannerWidth / adWidth * adHeight);
-
-        if(show)
-            bannerView.setFrame(new CGRect((screenWidth / 2) - adWidth / 2, 0, bannerWidth,  bannerHeight));
-        else
-            bannerView.setFrame(new CGRect(0, -bannerHeight, bannerWidth, bannerHeight));
+    @Override
+    public void resetReward(){
+        didCompleteVideo = false;
     }
 }

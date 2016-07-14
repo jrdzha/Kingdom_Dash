@@ -8,7 +8,7 @@ import com.jahrud.kingdomdash.GameEngine;
 import ios.foundation.NSAutoreleasePool;
 import ios.uikit.c.UIKit;
 
-public class IOSMoeLauncher extends IOSApplication.Delegate implements OSLauncher{
+public class IOSMoeLauncher extends IOSApplication.Delegate implements AdViewer{
 
     protected IOSMoeLauncher(Pointer peer) {
         super(peer);
@@ -28,17 +28,22 @@ public class IOSMoeLauncher extends IOSApplication.Delegate implements OSLaunche
     }
 
     @Override
-    public void showInterstitialAd() {
+    public void loadVideoAd() {
 
     }
 
     @Override
-    public void showBannerAd() {
+    public void showVideoAd() {
 
     }
 
     @Override
-    public void hideBannerAd() {
+    public boolean shouldReward() {
+        return false;
+    }
+
+    @Override
+    public void resetReward() {
 
     }
 }

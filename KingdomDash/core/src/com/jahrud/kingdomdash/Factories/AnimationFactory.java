@@ -122,7 +122,7 @@ public class AnimationFactory {
         Object[] completeAnimation = new Object[2];
         ArrayList<Sprite> sprites = new ArrayList<Sprite>();
         sprites.add(spriteRegion(Tileset, (index % 10) + 7, index / 10, 16, 16));
-        sprites.get(0).setScale(1.02f);
+        sprites.get(0).setScale(1.05f);
         completeAnimation[0] = sprites;
         ArrayList<Integer> animations = new ArrayList<Integer>();
         animations.add(new Integer(-1));

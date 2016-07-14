@@ -6,11 +6,11 @@ import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.jahrud.kingdomdash.AdViewer;
 import com.jahrud.kingdomdash.Factories.AnimationFactory;
 import com.jahrud.kingdomdash.Factories.ChunkFactory;
 import com.jahrud.kingdomdash.Factories.EntityFactory;
 import com.jahrud.kingdomdash.Factories.TileFactory;
-import com.jahrud.kingdomdash.OSLauncher;
 import com.jahrud.kingdomdash.Systems.*;
 import com.jahrud.kingdomdash.components.UI.ScreenPositionComponent;
 import com.jahrud.kingdomdash.components.UI.SizeComponent;
@@ -54,11 +54,11 @@ public class KingdomDashScene extends Scene{
     Audio audio;
     Music music;
 
-    private OSLauncher platform;
+    private AdViewer adViewer;
 
-    public KingdomDashScene(OSLauncher platform){
+    public KingdomDashScene(AdViewer platform){
         IDENTIFIER = 1;
-        this.platform = platform;
+        this.adViewer = platform;
 
         currentScreen = 0;
 
@@ -177,10 +177,13 @@ public class KingdomDashScene extends Scene{
         audio = Gdx.audio;
         music = Gdx.audio.newMusic(Gdx.files.internal("Insert-Quarter.mp3"));
         music.setLooping(true);
+
+        adViewer.loadVideoAd();
+        System.out.println("Loading");
+        System.out.println("Waiting to show");
+        //adViewer.showVideoAd();
+
         music.play();
-
-        platform.showBannerAd();
-
         System.gc();
     }
 

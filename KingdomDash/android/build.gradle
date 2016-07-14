@@ -19,6 +19,7 @@ android {
         applicationId "com.jahrud.kingdomdash"
         minSdkVersion 11
         targetSdkVersion 23
+        //multiDexEnabled true
     }
 }
 
