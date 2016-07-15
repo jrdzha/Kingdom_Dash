@@ -102,7 +102,7 @@ public class KingdomDashScene extends Scene{
         physicsSystem = new PhysicsSystem(ashleyEngine, physicsEngine, physicsEngine.getComponent(Box2DComponent.class).Box2dworld, physicsScale, player);
         animationManagerSystem = new AnimationManagerSystem();
         cameraSystem = new CameraSystem();
-        endGameSystem = new EndGameSystem(player);
+        endGameSystem = new EndGameSystem(player, adViewer);
         renderSystem = new RenderSystem(player, physicsScale);
         mapSystem = new MapSystem(ashleyEngine, currentScreen, chunkFactory, tileFactory, player, physicsScale);
         scoreSystem = new ScoreSystem(player);
@@ -175,14 +175,8 @@ public class KingdomDashScene extends Scene{
     @Override
     public void init() {
         audio = Gdx.audio;
-        music = Gdx.audio.newMusic(Gdx.files.internal("Insert-Quarter.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("Whimsical-Popsicle.mp3"));
         music.setLooping(true);
-
-        adViewer.loadVideoAd();
-        System.out.println("Loading");
-        System.out.println("Waiting to show");
-        //adViewer.showVideoAd();
-
         music.play();
         System.gc();
     }

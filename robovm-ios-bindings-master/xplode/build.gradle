@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.xplode.sample.Sample"
-}
-
-eclipse.project {
-    name = "xplode-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.tapjoy.sample.Sample"
-}
-
-eclipse.project {
-    name = "tapjoy-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

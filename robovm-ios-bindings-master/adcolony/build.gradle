@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.adcolony.sample.Sample"
-}
-
-eclipse.project {
-    name = "adcolony-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

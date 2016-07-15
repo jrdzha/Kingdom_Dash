@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.unityads.sample.Sample"
-}
-
-eclipse.project {
-    name = "unityads-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

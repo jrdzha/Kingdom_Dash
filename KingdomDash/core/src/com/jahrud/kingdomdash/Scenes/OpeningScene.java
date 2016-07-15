@@ -53,7 +53,7 @@ public class OpeningScene extends Scene{
 
         int nextScene;
         timesRendered++;
-        if(timesRendered > 240){
+        if(timesRendered > 100){
             nextScene = 1;
             this.dispose();
             this.isRunning = false;

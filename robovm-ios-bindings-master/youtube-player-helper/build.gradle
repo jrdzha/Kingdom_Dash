@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.ythelper.sample.Sample"
-}
-
-eclipse.project {
-    name = "youtube-player-helper"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

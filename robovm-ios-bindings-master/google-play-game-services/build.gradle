@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.gpgs.sample.Sample"
-}
-
-eclipse.project {
-    name = "google-play-game-services-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.admob.sample.Sample"
-}
-
-eclipse.project {
-    name = "admob-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

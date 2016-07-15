@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.everyplay.sample.Sample"
-}
-
-eclipse.project {
-    name = "everyplay-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

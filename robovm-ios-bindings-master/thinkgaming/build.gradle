@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.thinkgaming.sample.Sample"
-}
-
-eclipse.project {
-    name = "thinkgaming-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

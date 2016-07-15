@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.vungle.sample.Sample"
-}
-
-eclipse.project {
-    name = "vungle-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}
