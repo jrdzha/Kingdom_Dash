@@ -1,6 +1,8 @@
 package com.jahrud.kingdomdash.desktop;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.jahrud.kingdomdash.GameEngine;
 
 public class DesktopLauncher{
 
@@ -14,6 +16,6 @@ public class DesktopLauncher{
 		config.height = 1334 / 2;
 		config.fullscreen = false;
 
-		new DesktopGameEngine(config);
+		new LwjglApplication(new GameEngine(), config);
 	}
 }

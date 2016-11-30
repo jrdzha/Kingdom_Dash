@@ -34,11 +34,7 @@
   </forceLinkClasses>
   <libs>
       <lib>z</lib>
-      <lib>libs/libadmob.a</lib>
   </libs>
-  <frameworkPaths>
-    <path>libs</path>
-  </frameworkPaths>
   <frameworks>
     <framework>UIKit</framework>
     <framework>OpenGLES</framework>
@@ -47,13 +43,5 @@
     <framework>OpenAL</framework>
     <framework>AudioToolbox</framework>
     <framework>AVFoundation</framework>
-    <framework>Chartboost</framework>
-    <framework>StoreKit</framework>
-    <framework>Foundation</framework>
-    <framework>CoreGraphics</framework>
   </frameworks>
-  <weakFrameworks>
-          <framework>AdSupport</framework>
-          <framework>StoreKit</framework>
-    </weakFrameworks>
 </config>

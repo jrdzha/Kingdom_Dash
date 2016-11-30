@@ -1,14 +1,13 @@
 buildscript {
     repositories {
+        jcenter()
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url uri(System.getenv("INTEL_MULTI_OS_ENGINE_HOME") + "/gradle") }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0-SNAPSHOT'
-        classpath 'com.intel.gradle:moeGradlePlugin:1.1.0.final-1'
+        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
     }
 }
 
@@ -19,17 +18,17 @@ allprojects {
     version = '1.1.0'
     ext {
         appName = "Kingdom Dash"
-        gdxVersion = '1.9.3'
-        roboVMVersion = '2.2.0-SNAPSHOT'
+        gdxVersion = '1.9.4'
+        roboVMVersion = '2.2.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
     }
 
     repositories {
+        jcenter()
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
 }
@@ -43,8 +42,6 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
@@ -69,9 +66,6 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
@@ -79,7 +73,6 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
-        compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.google.android.gms:play-services-ads:9.2.1"
         compile fileTree(dir: 'libs', include: '*.jar')
     }
@@ -97,7 +90,6 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
-        compile "com.mobidevelop.robovm:robopods-chartboost-ios:2.2.0-SNAPSHOT"
         compile fileTree(dir: 'libs', include: '*.jar')
         robovm {
             iosSignIdentity = 'iPhone Distribution: Jared Zhao (L79JFH82EN)'
@@ -109,29 +101,11 @@ project(":ios") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
-    }
-}
-
-project(":ios-moe") {
-    apply plugin: "moe"
-
-    configurations { natives }
-
-    dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-moe:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
     }
 }
 

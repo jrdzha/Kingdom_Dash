@@ -13,10 +13,8 @@ public class GameEngine extends ApplicationAdapter {
 
     private int currentScene;
 
-    private AdViewer adViewer;
+    public GameEngine(){
 
-    public GameEngine(AdViewer platform){
-        this.adViewer = platform;
     }
 
     @Override
@@ -24,7 +22,7 @@ public class GameEngine extends ApplicationAdapter {
         currentScene = 0;
         scenes = new ArrayList<Scene>();
         scenes.add(new OpeningScene());
-        scenes.add(new KingdomDashScene(adViewer));
+        scenes.add(new KingdomDashScene());
     }
 
     @Override

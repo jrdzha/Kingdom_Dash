@@ -6,7 +6,6 @@ import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.jahrud.kingdomdash.AdViewer;
 import com.jahrud.kingdomdash.Factories.AnimationFactory;
 import com.jahrud.kingdomdash.Factories.ChunkFactory;
 import com.jahrud.kingdomdash.Factories.EntityFactory;
@@ -54,11 +53,8 @@ public class KingdomDashScene extends Scene{
     Audio audio;
     Music music;
 
-    private AdViewer adViewer;
-
-    public KingdomDashScene(AdViewer platform){
+    public KingdomDashScene(){
         IDENTIFIER = 1;
-        this.adViewer = platform;
 
         currentScreen = 0;
 
@@ -102,7 +98,7 @@ public class KingdomDashScene extends Scene{
         physicsSystem = new PhysicsSystem(ashleyEngine, physicsEngine, physicsEngine.getComponent(Box2DComponent.class).Box2dworld, physicsScale, player);
         animationManagerSystem = new AnimationManagerSystem();
         cameraSystem = new CameraSystem();
-        endGameSystem = new EndGameSystem(player, adViewer);
+        endGameSystem = new EndGameSystem(player);
         renderSystem = new RenderSystem(player, physicsScale);
         mapSystem = new MapSystem(ashleyEngine, currentScreen, chunkFactory, tileFactory, player, physicsScale);
         scoreSystem = new ScoreSystem(player);
@@ -175,7 +171,7 @@ public class KingdomDashScene extends Scene{
     @Override
     public void init() {
         audio = Gdx.audio;
-        music = Gdx.audio.newMusic(Gdx.files.internal("Whimsical-Popsicle.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("Insert-Quarter.mp3"));
         music.setLooping(true);
         music.play();
         System.gc();

@@ -24,7 +24,7 @@ public class PhysicsSystem extends EntitySystem {
     public Entity player;
     private ImmutableArray<Entity> jumpedEntities;
     private ImmutableArray<Entity> continueJumpEntities;
-    public float speed = 160;
+    public float speed = 200;
 
     public PhysicsSystem(Engine ashleyEngine, Entity physicsEngine, World Box2dworld, float scale, Entity player){
         this.ashleyEngine = ashleyEngine;
@@ -45,13 +45,15 @@ public class PhysicsSystem extends EntitySystem {
     }
 
     public void update(float deltaTime){
+        /*
         if(player.getComponent(ScoreComponent.class).startChunk != -1) {
             speed += ((player.getComponent(PositionComponent.class).x - (player.getComponent(ScoreComponent.class).startChunk - 3) * 16 * 12) / 8000f);
         } else {
-            speed = 170;
+            speed = 140;
         }
         if(speed > 230) speed = 230;
-
+        */
+        speed = 200;
 
         Box2dworld.step(deltaTime, 6, 2);
         if(continueJumpEntities.size() > 0){
