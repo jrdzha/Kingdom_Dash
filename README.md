@@ -6,4 +6,4 @@ You may find the app on the Google Play and iOS App Stores (links on http://jare
 This is meant to be an example of animation, physics, and the use of an entity-component system in game development.
 The package "systems" is of noteworthy interest
 
-http://jaredzhao.com/images/kingdom_dash.jpg
+![Alt text](http://jaredzhao.com/images/kingdom_dash.jpg "In game GLSL shader")
